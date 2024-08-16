@@ -10,13 +10,26 @@ var move = direita - esquerda;
 hveloc = move * veloc;
 
 // Definição dos Sprites com Base na Direção
-if (hveloc > 0) {
-    sprite_index = sPlayerCorreD;  // Movendo para a direita
+if (vveloc < 0 && hveloc > 0) {
+    // Movendo para cima e para a direita simultaneamente
+    sprite_index = sPlayerPulaLadoD;
+} else if (vveloc < 0 && hveloc < 0) {
+    // Movendo para cima e para a esquerda simultaneamente
+    sprite_index = sPlayerPulaLadoE;
+} else if (hveloc > 0) {
+    // Movendo para a direita
+    sprite_index = sPlayerCorreD;
 } else if (hveloc < 0) {
-    sprite_index = sPlayerCorreE;  // Movendo para a esquerda
+    // Movendo para a esquerda
+    sprite_index = sPlayerCorreE;
+} else if (vveloc < 0) {
+    // Apenas pulando
+    sprite_index = sPlayerPula;
 } else {
-    sprite_index = sPlayer;  // Parado
+    // Parado
+    sprite_index = sPlayer;
 }
+
 
 #endregion
 

@@ -1,7 +1,7 @@
 direita = 0
 esquerda = 0
 cima =  0 
-gravidade = 0.17
+gravidade = 0.19
 direc = 0 
 
 hveloc = 0

@@ -59,8 +59,8 @@
   },
   "origin":4,
   "parent":{
-    "name":"sPlayer+animacao",
-    "path":"folders/Sprites/sPlayer+animacao.yy",
+    "name":"CORRE",
+    "path":"folders/Sprites/sPlayer+animacao/CORRE.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
