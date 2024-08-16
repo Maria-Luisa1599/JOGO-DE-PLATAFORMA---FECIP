@@ -1,55 +1,63 @@
-direita = keyboard_check(ord("D"))
-	esquerda =  keyboard_check(ord("A"))
-	cima = keyboard_check_pressed(vk_space)
+#region CONTROLES
+direita = keyboard_check(ord("D"));
+esquerda = keyboard_check(ord("A"));
+cima = keyboard_check_pressed(vk_space);
+#endregion
 
-	hveloc = (direita - esquerda) * veloc
-	if direita
-	{ 
-		direc = 0
-		sprite_index = sPlayerCorreD
-	}else if esquerda
-	{
-		direc = 1
-		sprite_index = sPlayerCorreE
-	}else
-	{
-		sprite_index = sPlayer
-	}
-	//movimentação e colisão
-	if !place_meeting(x, y + 1, oChao)
-	{
-		vveloc += gravidade
-	}else
-	{
-		if cima
-		{
-			vveloc = -4.8
-		}
-	}
-	if place_meeting(x + hveloc, y, oChao)
-	{
-		while !place_meeting(x + sign(hveloc), y, oChao)
-		{
-			x += sign(hveloc)
-		}
-	
-		hveloc = 0 
-	}
+#region SPRITE MOVIMENTAÇÃO
+// Definição da Velocidade Horizontal
+var move = direita - esquerda;
+hveloc = move * veloc;
 
-	if place_meeting(x, y  + vveloc, oChao)
-	{
-		while !place_meeting(x , y + sign(vveloc), oChao)
-		{
-			y += sign(vveloc)
-		}
-	
-		vveloc = 0 
-	}
+// Definição dos Sprites com Base na Direção
+if (hveloc > 0) {
+    sprite_index = sPlayerCorreD;  // Movendo para a direita
+} else if (hveloc < 0) {
+    sprite_index = sPlayerCorreE;  // Movendo para a esquerda
+} else {
+    sprite_index = sPlayer;  // Parado
+}
 
-	x += hveloc
-	y += vveloc
-	
-	#region CAIXA
+#endregion
+
+#region COLISÃO H E V
+// Detecção e Resolução de Colisão Horizontal
+if (place_meeting(x + hveloc, y, oChao) or place_meeting(x + hveloc, y, oPlataforma) or place_meeting(x + hveloc, y, oChaoMenor)) {
+    while (!place_meeting(x + sign(hveloc), y, oChao) and !place_meeting(x + sign(hveloc), y, oPlataforma) and !place_meeting(x + sign(hveloc), y, oChaoMenor)) {
+        x += sign(hveloc);
+    }
+    hveloc = 0;
+}
+
+// Aplica Movimento Horizontal
+x += hveloc;
+
+#region PULO
+// Gravidade e Pulo
+if (!place_meeting(x, y + 1, oChao) and !place_meeting(x, y + 1, oPlataforma) and !place_meeting(x, y + 1, oChaoMenor)) {
+    vveloc += gravidade;  // Aplica gravidade se não estiver no chão
+} else {
+    if (cima) {
+        vveloc = -4.8;  // Define a velocidade vertical para o pulo
+    } else {
+        vveloc = 0;  // Zera a velocidade vertical ao tocar o chão
+    }
+}
+#endregion
+
+// Detecção e Resolução de Colisão Vertical
+if (place_meeting(x, y + vveloc, oChao) or place_meeting(x, y + vveloc, oPlataforma) or place_meeting(x, y + vveloc, oChaoMenor)) {
+    while (!place_meeting(x, y + sign(vveloc), oChao) and !place_meeting(x, y + sign(vveloc), oPlataforma) and !place_meeting(x, y + sign(vveloc), oChaoMenor)) {
+        y += sign(vveloc);
+    }
+    vveloc = 0;
+}
+
+// Aplica Movimento Vertical
+y += vveloc;
+#endregion
+
+#region CAIXA
 
 
 if (keyboard_check_pressed(vk_control)) {
@@ -73,3 +81,4 @@ if (keyboard_check_pressed(vk_control)) {
 if (keyboard_check(ord("R"))) {
     room_restart();
 }
+#endregion
