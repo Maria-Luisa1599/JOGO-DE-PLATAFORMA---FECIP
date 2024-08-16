@@ -1,65 +1,55 @@
-#region CONTROLES
-key_right = keyboard_check(ord("D"));
-key_left = keyboard_check(ord("A"));
-key_jump = keyboard_check(vk_space);
-#endregion
+direita = keyboard_check(ord("D"))
+	esquerda =  keyboard_check(ord("A"))
+	cima = keyboard_check_pressed(vk_space)
 
-#region MOVIMENTAÇÃO
-
-// movimento horizontal
-var move = key_right - key_left;
-hspd = move * spd;
-
-if (hspd != 0) {
-    image_xscale = sign(hspd); // Inverte a imagem
-}
-x += hspd;
-
-// Colisão horizontal com o chão e a plataforma
-if (place_meeting(x, y, oChao) or place_meeting(x, y, oPlataforma) or place_meeting(x, y, oChaoMenor)) {
-    while (!place_meeting(x + sign(hspd), y, oChao) /*and !place_meeting(x + sign(hspd), y, oPlataforma)*/ and !place_meeting(x + sign(hspd), y, oChaoMenor)) {
-        x += sign(hspd);
-    }
-    hspd = 0;
+	hveloc = (direita - esquerda) * veloc
+	if direita
+	{ 
+		direc = 0
+		sprite_index = sPlayerCorreD
+	}else if esquerda
+	{
+		direc = 1
+		sprite_index = sPlayerCorreE
+	}else
+	{
+		sprite_index = sPlayer
+	}
+	//movimentação e colisão
+	if !place_meeting(x, y + 1, oChao)
+	{
+		vveloc += gravidade
+	}else
+	{
+		if cima
+		{
+			vveloc = -4.8
+		}
+	}
+	if place_meeting(x + hveloc, y, oChao)
+	{
+		while !place_meeting(x + sign(hveloc), y, oChao)
+		{
+			x += sign(hveloc)
+		}
 	
-	// aparentemente n ta funcionandoa colisão horizontal (pedro, se vc ler isso, dps eu te mando como fiz)
-}
+		hveloc = 0 
+	}
 
-// Atualiza a gravidade
-vspd += grv;
+	if place_meeting(x, y  + vveloc, oChao)
+	{
+		while !place_meeting(x , y + sign(vveloc), oChao)
+		{
+			y += sign(vveloc)
+		}
+	
+		vveloc = 0 
+	}
 
-// Colisão vertical com o chão e a plataforma
-if (place_meeting(x, y + vspd, oChao) or place_meeting(x, y + vspd, oPlataforma) or place_meeting(x, y + vspd, oChaoMenor)) {
-    while (!place_meeting(x, y + sign(vspd), oChao) and !place_meeting(x, y + sign(vspd), oPlataforma) and !place_meeting(x, y + sign(vspd), oChaoMenor)) {
-        y += sign(vspd);
-    }
-    vspd = 0;
-}
-
-// posição vert
-y += vspd;
-
-// Pulo
-if (place_meeting(x, y + 1, oChao) or place_meeting(x, y + 1, oPlataforma) or place_meeting(x, y + 1, oChaoMenor)) {
-    if (key_jump) {
-        vspd -= 8;
-    }
-}
-
-#endregion
-
-#region ALTERANDO SPRITE
-// sprite correndinho
-if (key_right or key_left) {
-    sprite_index = sPlayerCorre;
-} else if (vspd < 0) {
-    sprite_index = sPlayerPula;
-} else {
-    sprite_index = sPlayer;
-}
-#endregion
-
-#region CAIXA
+	x += hveloc
+	y += vveloc
+	
+	#region CAIXA
 
 
 if (keyboard_check_pressed(vk_control)) {
