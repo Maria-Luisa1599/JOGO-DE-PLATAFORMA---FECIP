@@ -1,1 +1,1 @@
-room_goto(Room2);
+room_goto(FaseBoss1);

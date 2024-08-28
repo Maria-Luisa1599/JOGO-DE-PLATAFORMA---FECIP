@@ -1,0 +1,1 @@
+vida = irandom_range(3, 10);

@@ -6,8 +6,16 @@ direc = 0
 
 hveloc = 0
 vveloc = 0
-veloc = 2.5
+veloc = 3
 
 //vida_perso = new scr_vida(30) 
 
 //alfa_hit = 0 
+
+is_on_ladder = false;
+
+_accel = 0.5;
+_max_walk = 3;
+
+//tiro
+mirar = 0;
