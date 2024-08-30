@@ -18,4 +18,4 @@ _accel = 0.5;
 _max_walk = 3;
 
 //tiro
-mirar = 0;
+mirar = 0; //DIREÇÃO DA MIRAGEM (0=DIREITA; 1=ESQUERDA)
