@@ -21,3 +21,4 @@ velocidade_maxima = 10; // Velocidade máxima de queda
 invencivel = false;
 tempo_invencivel = 0;
 tempo_maximo_invencivel = 300;
+ativou_invencibilidade = false

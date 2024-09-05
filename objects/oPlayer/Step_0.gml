@@ -165,79 +165,120 @@ else{
 //pra ativar.
 
 
-//3
-#region TIRO GELO
+//1
+#region SUPERPULO
 
-var tiro_gelo = keyboard_check_pressed(ord("3")); // TECLA K = TIRO
+tempo_superpulo += 1;
 
-if (tiro_gelo && !tiro_criado) { // SE K FOR PRESSIONADO E O TIRO NÃO FOI CRIADO
-    var t_gelo = instance_create_layer(x, y, layer, oTiroGelo); // CRIA O TIRO
-    t_gelo.speed = 7; // VELOCIDADE DO TIRO
-    t_gelo.dano = irandom_range(1, 3); // DANO ALEATÓRIO ENTRE 1 E 3
-    t_gelo.direction = 180 * mirar; // DIREÇÃO DO TIRO
-    tiro_criado = true; // Marca que o tiro foi criado
+if (tempo_superpulo <= tempo_maximo_superpulo) {
+    if (keyboard_check_pressed(ord("1"))) {
+        pulo_forca = -8.3;
+        tempo_superpulo = 0;
+    }
+} else {
+    pulo_forca = -7.3;
 }
 
-// Atualizando o tempo de efeito de gelo
+#endregion
+
+//2
+var tiro_duplo = keyboard_check_pressed(ord("2"));
+
+if (tiro_duplo && !tiro_criadod) { // SE 2 FOR PRESSIONADO E O TIRO NÃO FOI CRIADO
+    var t_duplo = instance_create_layer(x, y, layer, oTiroDuplo); // CRIA O TIRO
+    t_duplo.speed = 7; // VELOCIDADE DO TIRO
+    t_duplo.dano = irandom_range(1, 3); // DANO ALEATÓRIO ENTRE 1 E 3
+    t_duplo.direction = 180 * mirar; // DIREÇÃO DO TIRO
+    //tiro_criadod = true; // Marca que o tiro foi criado (se tirar de comment, só atira 1 vez
+}
+
 tempo_gelado += 1;
 
-// Ajusta a velocidad
 if (tempo_gelado > tempo_maximo_gelado) {
     global.veloc = 0.8;
 }
 
 
+//3
+#region TIRO GELO
+
+var tiro_gelo = keyboard_check_pressed(ord("3"));
+
+if (tiro_gelo && !tiro_criadog) { // SE 3 FOR PRESSIONADO E O TIRO NÃO FOI CRIADO
+    var t_gelo = instance_create_layer(x, y, layer, oTiroGelo); // CRIA O TIRO
+    t_gelo.speed = 7; // VELOCIDADE DO TIRO
+    t_gelo.dano = irandom_range(1, 3); // DANO ALEATÓRIO ENTRE 1 E 3
+    t_gelo.direction = 180 * mirar; // DIREÇÃO DO TIRO
+    tiro_criadog = true; // Marca que o tiro foi criado
+}
+
+tempo_gelado += 1;
+
+if (tempo_gelado > tempo_maximo_gelado) {
+    global.veloc = 0.8;
+}
+
 #endregion
+
+//4 no inimigo
 
 //5
 #region ENFURECIDO
+
 tempo_enfurecido += 1;
+
 if (tempo_enfurecido <= tempo_maximo_enfurecido) {
-	if (keyboard_check_pressed(ord("5"))){
-		veloc = 4.5;
-	}
-}else{
-	veloc = 3;
+    if (keyboard_check_pressed(ord("5"))) {
+        veloc = 5.3;
+        tempo_enfurecido = 0; 
+    }
+} else {
+    veloc = 3;
 }
+
 #endregion
 
+if (!place_meeting(x, y + 1, oChao)
+and !place_meeting(x, y + 1, oPlataforma)
+and !place_meeting(x, y + 1, oChaoMenor)
+and !place_meeting(x, y + 1, oMadeiraChao) 
+and !place_meeting(x, y + 1, oMadeiraPlataforma)
+and !place_meeting(x, y + 1, oMadeiraQb)) {
+    vveloc += gravidade;
+} else {
+    if (cima) {
+        vveloc = pulo_forca;  
+    } else {
+        vveloc = 0;
+    }
+}
 
-//6
+
+
+//6 DANDO ERRO PQ APAGUEI O COD DE SEGUIR
 #region INVISIVEL
 
 tempo_invisivel += 1;
 if (tempo_invisivel <= tempo_maximo_invisivel) {
-	if (keyboard_check_pressed(ord("6")) && !invisivel = true && global.seguindo == true){
-		global.seguindo = false;
-		
-	}
-}else{
-	global.seguindo = true;
+    if (keyboard_check_pressed(ord("6")) && !invisivel && global.seguindo) {
+        global.seguindo = false;
+    }
+} else {
+    global.seguindo = true;
 }
 
 #endregion
 
-
+//se minha sala for igual a de index 1 (a segunda sala), nunhum poder vai funcionar) 
+//acho q n vai precisar mas deixei ai
+if (room == 1) {
+    tiro_criado = false;
+    super_pulo = false;
+    tecla_pulo = false;
+    pulo_forca = -7.3;
+    veloc = 3;
+}
 
 #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endregion
