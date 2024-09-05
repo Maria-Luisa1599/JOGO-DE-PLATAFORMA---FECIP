@@ -11,11 +11,11 @@ if place_meeting(x, y, oPlataforma){
  //andando para a direita
 if direc == 0{
 	sprite_index = sInimigo
-	x += veloc;
+	x += global.veloc;
 }//andando para a esquerda
 else if direc == 1{
 	sprite_index = sInimigo
-	x -= veloc;
+	x -= global.veloc;
 }
 //gravidade 
 // Aplicar gravidade
@@ -34,3 +34,18 @@ y += velocidade_vertical;
 if (vida <= 0) {
 	instance_destroy();
 }
+
+
+
+#region INVENCIBILIDADE
+tempo_invencivel += 1;
+if (tempo_invencivel <= tempo_maximo_invencivel) {
+	if(keyboard_check(ord("4")) && !invencivel = true){
+		vida = 9999999;
+		invencivel = true;
+	}
+}else{
+	vida = 10;
+}
+#endregion
+

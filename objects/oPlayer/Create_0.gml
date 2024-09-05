@@ -19,3 +19,19 @@ _max_walk = 3;
 
 //tiro
 mirar = 0; //DIREÇÃO DA MIRAGEM (0=DIREITA; 1=ESQUERDA)
+
+tempo_enfurecido = 0;
+tempo_maximo_enfurecido = 600; //acho q é 5seg ai rs
+
+
+tiro_criado = false;
+
+
+tempo_gelado = 0;
+tempo_maximo_gelado = 300
+
+
+invisivel =  false
+
+tempo_invisivel = 0;
+tempo_maximo_invisivel = 300;

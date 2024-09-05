@@ -143,23 +143,99 @@ if place_meeting(x,y,oEscada){
 
 	if keyboard_check(ord("W")){
 		sprite_index = sPTeste
-		vveloc = -3;
+		vveloc = -2;
 		gravidade = 0;
 	} else if keyboard_check(ord("S")){
-		vveloc=3;
+		vveloc=2;
 		gravidade = 0;
 		sprite_index = sPTeste
 	}
 	else{
 		vveloc = 0;
 	}
-
-//	if (sprite_index != sPTeste) // se o sprite já não for spr_escada
-//	{
-//	sprite_index = sPTeste // transforma em spr_escada.
-//	image_index = 0 //aproveita e reseta a animação pro primeiro frame, pode ser isso também/	
-//	}
 }
 else{
 	gravidade = 0.19;
 }
+
+
+
+#region POWERUP
+//dps cria outro if pra verificar se a "compra" do powerup foi realizada
+//pra ativar.
+
+
+//3
+#region TIRO GELO
+
+var tiro_gelo = keyboard_check_pressed(ord("3")); // TECLA K = TIRO
+
+if (tiro_gelo && !tiro_criado) { // SE K FOR PRESSIONADO E O TIRO NÃO FOI CRIADO
+    var t_gelo = instance_create_layer(x, y, layer, oTiroGelo); // CRIA O TIRO
+    t_gelo.speed = 7; // VELOCIDADE DO TIRO
+    t_gelo.dano = irandom_range(1, 3); // DANO ALEATÓRIO ENTRE 1 E 3
+    t_gelo.direction = 180 * mirar; // DIREÇÃO DO TIRO
+    tiro_criado = true; // Marca que o tiro foi criado
+}
+
+// Atualizando o tempo de efeito de gelo
+tempo_gelado += 1;
+
+// Ajusta a velocidad
+if (tempo_gelado > tempo_maximo_gelado) {
+    global.veloc = 0.8;
+}
+
+
+#endregion
+
+//4
+#region INVISIVEL
+
+tempo_invisivel += 1;
+if (tempo_invisivel <= tempo_maximo_invisivel) {
+	if (keyboard_check_pressed(ord("4")) && !invisivel = true && global.seguindo == true){
+		global.seguindo = false;
+		
+	}
+}else{
+	global.seguindo = true;
+}
+
+#endregion
+
+
+//5
+#region ENFURECIDO
+tempo_enfurecido += 1;
+if (tempo_enfurecido <= tempo_maximo_enfurecido) {
+	if (keyboard_check_pressed(ord("5"))){
+		veloc = 4.5;
+	}
+}else{
+	veloc = 3;
+}
+#endregion
+
+#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endregion
