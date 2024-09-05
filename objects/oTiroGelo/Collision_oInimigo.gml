@@ -2,4 +2,4 @@
 other.vida -= dano;
 instance_destroy();
 
-global.veloc =0.3;
+global.veloc = 0.3;

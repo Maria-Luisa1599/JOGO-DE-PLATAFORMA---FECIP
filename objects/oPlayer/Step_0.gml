@@ -189,22 +189,6 @@ if (tempo_gelado > tempo_maximo_gelado) {
 
 #endregion
 
-//4
-#region INVISIVEL
-
-tempo_invisivel += 1;
-if (tempo_invisivel <= tempo_maximo_invisivel) {
-	if (keyboard_check_pressed(ord("4")) && !invisivel = true && global.seguindo == true){
-		global.seguindo = false;
-		
-	}
-}else{
-	global.seguindo = true;
-}
-
-#endregion
-
-
 //5
 #region ENFURECIDO
 tempo_enfurecido += 1;
@@ -216,6 +200,24 @@ if (tempo_enfurecido <= tempo_maximo_enfurecido) {
 	veloc = 3;
 }
 #endregion
+
+
+//6
+#region INVISIVEL
+
+tempo_invisivel += 1;
+if (tempo_invisivel <= tempo_maximo_invisivel) {
+	if (keyboard_check_pressed(ord("6")) && !invisivel = true && global.seguindo == true){
+		global.seguindo = false;
+		
+	}
+}else{
+	global.seguindo = true;
+}
+
+#endregion
+
+
 
 #endregion
 

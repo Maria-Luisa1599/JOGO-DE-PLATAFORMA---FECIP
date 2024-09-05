@@ -1,4 +1,4 @@
-vida = 10;
+vida = irandom_range(3,10);
 morto = false;
 
 direc = 0;
