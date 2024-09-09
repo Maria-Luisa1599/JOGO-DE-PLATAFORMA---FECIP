@@ -41,49 +41,71 @@ if (vveloc < 0 && hveloc > 0) {
 #endregion
 
 #region COLISÃO H
-// Detectando de colisão horizontal
-if (place_meeting(x + hveloc, y, oChao)
-or place_meeting(x + hveloc, y, oPlataforma)
-or place_meeting(x + hveloc, y, oChaoMenor)
-or place_meeting(x + hveloc, y, oMadeiraChao)
-or place_meeting(x + hveloc, y, oMadeiraPlataforma)
-or place_meeting(x + hveloc, y, oMadeiraQb)) {
-    while (!place_meeting(x + sign(hveloc), y, oChao)
-	and !place_meeting(x + sign(hveloc), y, oPlataforma)
-	and !place_meeting(x + sign(hveloc), y, oChaoMenor)
-	and !place_meeting(x + sign(hveloc), y, oMadeiraChao)
-	and !place_meeting(x + sign(hveloc), y, oMadeiraPlataforma)
-	and !place_meeting(x + sign(hveloc), y, oMadeiraQb)) {
-        x += sign(hveloc);
+if (!place_meeting(x, y, oEscada)) {
+    if (place_meeting(x + hveloc, y, oChao)
+    or place_meeting(x + hveloc, y, oPlataforma)
+    or place_meeting(x + hveloc, y, oChaoMenor)
+    or place_meeting(x + hveloc, y, oMadeiraChao)
+    or place_meeting(x + hveloc, y, oMadeiraPlataforma)
+    or place_meeting(x + hveloc, y, oMadeiraQb)) {
+        while (!place_meeting(x + sign(hveloc), y, oChao)
+        and !place_meeting(x + sign(hveloc), y, oPlataforma)
+        and !place_meeting(x + sign(hveloc), y, oChaoMenor)
+        and !place_meeting(x + sign(hveloc), y, oMadeiraChao)
+        and !place_meeting(x + sign(hveloc), y, oMadeiraPlataforma)
+        and !place_meeting(x + sign(hveloc), y, oMadeiraQb)) {
+            x += sign(hveloc);
+        }
+        hveloc = 0;
     }
-    hveloc = 0;
 }
 
-// Movimento Horizontal
 x += hveloc;
 #endregion
 
 #region COLISÃO V
-if (place_meeting(x, y + vveloc, oChao)
-or place_meeting(x, y + vveloc, oPlataforma)
-or place_meeting(x, y + vveloc, oChaoMenor)
-or place_meeting(x, y + vveloc, oMadeiraChao)
-or place_meeting(x, y + vveloc, oMadeiraPlataforma)
-or place_meeting(x, y + vveloc, oMadeiraQb)) {
-    while (!place_meeting(x, y + sign(vveloc), oChao)
-	and !place_meeting(x, y + sign(vveloc), oPlataforma)
-	and !place_meeting(x, y + sign(vveloc), oChaoMenor)
-	and !place_meeting(x, y + sign(vveloc), oMadeiraChao)
-	and !place_meeting(x, y + sign(vveloc), oMadeiraPlataforma)
-	and !place_meeting(x, y + sign(vveloc), oMadeiraQb)) {
-        y += sign(vveloc);
+
+if (place_meeting(x, y, oEscada)) {
+
+    if (keyboard_check(ord("W"))) {
+        sprite_index = sPTeste;
+        vveloc = -2.5;
+        gravidade = 0;
+    } else if (keyboard_check(ord("S"))) {
+        sprite_index = sPTeste;
+        vveloc = 2.5;
+        gravidade = 0;
+    } else if (keyboard_check_pressed(vk_space) && !place_meeting(x, y - 1, oEscada)) {
+        vveloc = -4.8; 
+        gravidade = 0.19;
+    } else {
+        vveloc = 0;
     }
-    vveloc = 0;
+} else {
+    gravidade = 0.19;
+
+    if (place_meeting(x, y + vveloc, oChao)
+    or place_meeting(x, y + vveloc, oPlataforma)
+    or place_meeting(x, y + vveloc, oChaoMenor)
+    or place_meeting(x, y + vveloc, oMadeiraChao)
+    or place_meeting(x, y + vveloc, oMadeiraPlataforma)
+    or place_meeting(x, y + vveloc, oMadeiraQb)) {
+        while (!place_meeting(x, y + sign(vveloc), oChao)
+        and !place_meeting(x, y + sign(vveloc), oPlataforma)
+        and !place_meeting(x, y + sign(vveloc), oChaoMenor)
+        and !place_meeting(x, y + sign(vveloc), oMadeiraChao)
+        and !place_meeting(x, y + sign(vveloc), oMadeiraPlataforma)
+        and !place_meeting(x, y + sign(vveloc), oMadeiraQb)) {
+            y += sign(vveloc);
+        }
+        vveloc = 0;
+    }
 }
 
-// Aplica Movimento Vertical
 y += vveloc;
 #endregion
+
+
 
 #region Gravidade e Pulo
 
@@ -93,15 +115,17 @@ and !place_meeting(x, y + 1, oChaoMenor)
 and !place_meeting(x, y + 1, oMadeiraChao) 
 and !place_meeting(x, y + 1, oMadeiraPlataforma)
 and !place_meeting(x, y + 1, oMadeiraQb)) {
-		vveloc += gravidade;
+    vveloc += gravidade; // Aplica gravidade quando não está no chão
 } else {
     if (cima) {
-        vveloc = -4.8;  //velocidade vertical para o pulo
+        vveloc = -4.8;  // Velocidade vertical para o pulo normal
     } else {
         vveloc = 0;  // Zera a velocidade vertical ao tocar o chão
     }
 }
-#endregion
+
+
+ #endregion
 
 #region TIRO
 	var tiro = keyboard_check_pressed(ord("Q")) // TECLA Q = TIRO
@@ -139,24 +163,8 @@ if (keyboard_check(ord("R"))) {
 
 
 //escada falhada
-if place_meeting(x,y,oEscada){
 
-	if keyboard_check(ord("W")){
-		sprite_index = sPTeste
-		vveloc = -2;
-		gravidade = 0;
-	} else if keyboard_check(ord("S")){
-		vveloc=2;
-		gravidade = 0;
-		sprite_index = sPTeste
-	}
-	else{
-		vveloc = 0;
-	}
-}
-else{
-	gravidade = 0.19;
-}
+
 
 
 
@@ -168,18 +176,48 @@ else{
 //1
 #region SUPERPULO
 
-tempo_superpulo += 1;
-
-if (tempo_superpulo <= tempo_maximo_superpulo) {
-    if (keyboard_check_pressed(ord("1"))) {
-        pulo_forca = -8.3;
-        tempo_superpulo = 0;
+// Controle do Super Pulo
+if (keyboard_check(ord("1"))) {
+    if (!super_pulo_ativo) {
+        // Ativa o super pulo e inicia o temporizador
+        super_pulo_ativo = true;
+        tempo_superpulo = tempo_maximo_superpulo;
+        vveloc = -6.3;  // Força do super pulo
     }
-} else {
-    pulo_forca = -7.3;
+} 
+
+//  Atualiza o tempo do super pulo se estiver ativo
+if (super_pulo_ativo) {
+    tempo_superpulo -= 1;  // Decrementa o tempo do super pulo
+
+    if (tempo_superpulo <= 0) {
+        // Desativa o super pulo após o tempo expirar
+        super_pulo_ativo = false;
+        vveloc = -4.8;  // Força de pulo normal
+    }
 }
 
-#endregion
+// Adiciona gravidade se não estiver no chão
+if (!place_meeting(x, y + 1, oChao) &&
+    !place_meeting(x, y + 1, oPlataforma) &&
+    !place_meeting(x, y + 1, oChaoMenor) &&
+    !place_meeting(x, y + 1, oMadeiraChao) &&
+    !place_meeting(x, y + 1, oMadeiraPlataforma) &&
+    !place_meeting(x, y + 1, oMadeiraQb)) {
+
+}
+
+
+
+//tempo_superpulo += 1;
+//if (tempo_superpulo <= tempo_maximo_superpulo) {
+//    if (keyboard_check(ord("1"))) {
+//        vveloc = -8.3;  // Define a força do super pulo
+//        tempo_superpulo = 0;  // Reseta o contador de tempo para o super pulo
+//    }
+//}
+
+
 
 //2
 var tiro_duplo = keyboard_check_pressed(ord("2"));
@@ -237,22 +275,6 @@ if (tempo_enfurecido <= tempo_maximo_enfurecido) {
 }
 
 #endregion
-
-if (!place_meeting(x, y + 1, oChao)
-and !place_meeting(x, y + 1, oPlataforma)
-and !place_meeting(x, y + 1, oChaoMenor)
-and !place_meeting(x, y + 1, oMadeiraChao) 
-and !place_meeting(x, y + 1, oMadeiraPlataforma)
-and !place_meeting(x, y + 1, oMadeiraQb)) {
-    vveloc += gravidade;
-} else {
-    if (cima) {
-        vveloc = pulo_forca;  
-    } else {
-        vveloc = 0;
-    }
-}
-
 
 
 //6 DANDO ERRO PQ APAGUEI O COD DE SEGUIR
