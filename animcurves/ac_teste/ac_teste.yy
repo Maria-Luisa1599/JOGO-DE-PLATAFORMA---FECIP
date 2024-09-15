@@ -1,0 +1,19 @@
+{
+  "$GMAnimCurve":"",
+  "%Name":"ac_teste",
+  "channels":[
+    {"$GMAnimCurveChannel":"","%Name":"escala","colour":4290799884,"name":"escala","points":[
+        {"th0":-0.1,"th1":0.1,"tv0":0.0,"tv1":0.0,"x":0.0,"y":0.5568082,},
+        {"th0":-0.077608146,"th1":0.034223914,"tv0":0.0,"tv1":0.0,"x":0.4923664,"y":0.417108,},
+        {"th0":-0.1,"th1":0.1,"tv0":0.0,"tv1":0.0,"x":1.0,"y":0.5568082,},
+      ],"resourceType":"GMAnimCurveChannel","resourceVersion":"2.0","visible":true,},
+  ],
+  "function":1,
+  "name":"ac_teste",
+  "parent":{
+    "name":"Objetos",
+    "path":"folders/Objetos.yy",
+  },
+  "resourceType":"GMAnimCurve",
+  "resourceVersion":"2.0",
+}

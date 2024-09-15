@@ -31,13 +31,12 @@ tiro_criadod = false;
 tempo_gelado = 0;
 tempo_maximo_gelado = 600
 
-
 super_pulo_ativo = false;
 tempo_superpulo = 0;
-tempo_maximo_superpulo = 900;  // Ajuste o tempo máximo do super pulo conforme necessário
-
-
+tempo_maximo_superpulo = 3;
+pulo = false;
 tecla_pulo = false;
+socorro = false;
 
 
 invisivel =  false

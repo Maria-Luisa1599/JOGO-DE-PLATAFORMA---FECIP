@@ -172,52 +172,32 @@ if (keyboard_check(ord("R"))) {
 //dps cria outro if pra verificar se a "compra" do powerup foi realizada
 //pra ativar.
 
-
-//1
+if(keyboard_check(ord("1"))){
+        tempo_superpulo++;
+		pulo = true;
+}
 #region SUPERPULO
+if (tempo_superpulo >= tempo_maximo_superpulo && pulo == true) { 
+    vveloc = -4.3;  // Execute normal jump
+    pulo = false;   // Reset jump
+} else {
 
-// Controle do Super Pulo
-if (keyboard_check(ord("1"))) {
-    if (!super_pulo_ativo) {
-        // Ativa o super pulo e inicia o temporizador
-        super_pulo_ativo = true;
-        tempo_superpulo = tempo_maximo_superpulo;
-        vveloc = -6.3;  // Força do super pulo
-    }
-} 
+    if (cima) {
 
-//  Atualiza o tempo do super pulo se estiver ativo
-if (super_pulo_ativo) {
-    tempo_superpulo -= 1;  // Decrementa o tempo do super pulo
-
-    if (tempo_superpulo <= 0) {
-        // Desativa o super pulo após o tempo expirar
-        super_pulo_ativo = false;
-        vveloc = -4.8;  // Força de pulo normal
+		vveloc = -6.3;
+        pulo = true;
     }
 }
 
-// Adiciona gravidade se não estiver no chão
-if (!place_meeting(x, y + 1, oChao) &&
-    !place_meeting(x, y + 1, oPlataforma) &&
-    !place_meeting(x, y + 1, oChaoMenor) &&
-    !place_meeting(x, y + 1, oMadeiraChao) &&
-    !place_meeting(x, y + 1, oMadeiraPlataforma) &&
-    !place_meeting(x, y + 1, oMadeiraQb)) {
-
+// Super jump logic
+if (!pulo && tempo_superpulo <= tempo_maximo_superpulo) {
+    if (cima) {  // Assuming 'cima' is the input for upwards movement
+        vveloc = -6.3;  // Set the vertical velocity for super jump
+          super_pulo_ativo = true;  // Activate super jump state
+    }
 }
 
-
-
-//tempo_superpulo += 1;
-//if (tempo_superpulo <= tempo_maximo_superpulo) {
-//    if (keyboard_check(ord("1"))) {
-//        vveloc = -8.3;  // Define a força do super pulo
-//        tempo_superpulo = 0;  // Reseta o contador de tempo para o super pulo
-//    }
-//}
-
-
+show_debug_message(tempo_superpulo)
 
 //2
 var tiro_duplo = keyboard_check_pressed(ord("2"));
